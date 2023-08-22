@@ -53,16 +53,18 @@ function createFeatures(earthquakeData) {
 }
 
 var legend = L.control({position: 'bottomright'});
-legend.onAdd = function (){
-    var div = L.DomUtil.create('div', 'info legend'),
-    depth = [0, 10, 30, 50, 70, 90];
-    div.innerHTML += "<h3 style='text-align: center;'>Depth</h3>"
-    for (var i = 0; i < depth.length; i++) {
-        div.innerHTML += "<i style='background:" + getColor(depth[i]) + "'></i> " + depth[i] + (depth[i + 1]? "&ndash;" + depth[i + 1] + "<br>" : "+");
-    }
+legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend"),
+    depth = [-10, 10, 30, 50, 70, 90];
+    
+    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+  for (var i =0; i < depth.length; i++) {
+    div.innerHTML += 
+    '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
+        depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+      }
     return div;
-};
-legend.addTo(myMap);
+  };
 
 function createMap(earthquakes) {
 
@@ -87,7 +89,7 @@ function createMap(earthquakes) {
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load.
-  let myMap = L.map("map", {
+  let map = L.map("map", {
     center: [
       37.09, -95.71
     ],
@@ -101,5 +103,7 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(map);
+
+  legend.addTo(map);
 
 }
